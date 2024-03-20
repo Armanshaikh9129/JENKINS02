@@ -1,9 +1,8 @@
-
 pipeline {
     agent any
 
     environment {
-        AWS_ACCESS_KEY = ''
+        AWS_ACCESS_KEY_ID = ''
         AWS_SECRET_ACCESS_KEY = ''
         AWS_REGION = 'ap-south-1'
     }
@@ -23,7 +22,7 @@ pipeline {
                 }
             }
         }
-         stages {
+        
         stage('Terraform Execution') {
             steps {
                 script {
@@ -47,7 +46,6 @@ pipeline {
             }
         }
     }
-}
 
     post {
         always {
