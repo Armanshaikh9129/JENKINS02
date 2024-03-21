@@ -5,7 +5,7 @@ pipeline {
         // These environment variables are placeholders. Actual values are injected by `withCredentials`.
         AWS_ACCESS_KEY_ID = ''
         AWS_SECRET_ACCESS_KEY = ''
-        AWS_REGION = 'ap-south-1'
+        AWS_REGION = 'us-east-1'
     }
 
     stages {
@@ -14,7 +14,7 @@ pipeline {
                 script {
                     withCredentials([[
                         $class: 'AmazonWebServicesCredentialsBinding',
-                        credentialsId: 'aws_cred',
+                        credentialsId: 'AWS_CRED',
                         accessKeyVariable: 'AWS_ACCESS_KEY_ID',
                         secretKeyVariable: 'AWS_SECRET_ACCESS_KEY'
                     ]]) {
