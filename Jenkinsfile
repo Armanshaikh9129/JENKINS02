@@ -23,7 +23,7 @@ pipeline {
                 }
             }
         }
-        
+
         stage('Terraform Initialization and Execution') {
             steps {
                 script {
@@ -34,14 +34,14 @@ pipeline {
                             choice(name: 'ACTION', choices: ['Apply', 'Destroy'], description: 'Choose Terraform action')
                         ]
                     )
-                    
+
                     // Initialize Terraform once at the beginning of the execution stage.
                     sh 'terraform init'
-                    echo "User selected action: ${userInput.ACTION}"
+
                     // Execute Terraform apply or destroy based on user input.
-                    if (userInput.ACTION == 'Apply') {
+                    if (userInput == 'Apply') {
                         sh 'terraform apply -auto-approve'
-                    } else if (userInput.ACTION == 'Destroy') {
+                    } else if (userInput == 'Destroy') {
                         sh 'terraform destroy -auto-approve'
                     } else {
                         error 'Invalid choice. Please select either Apply or Destroy.'
