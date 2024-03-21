@@ -2,6 +2,7 @@ pipeline {
     agent any
 
     environment {
+        // These environment variables are placeholders. Actual values are injected by `withCredentials`.
         AWS_ACCESS_KEY_ID = ''
         AWS_SECRET_ACCESS_KEY = ''
         AWS_REGION = 'ap-south-1'
@@ -17,13 +18,13 @@ pipeline {
                         accessKeyVariable: 'AWS_ACCESS_KEY_ID',
                         secretKeyVariable: 'AWS_SECRET_ACCESS_KEY'
                     ]]) {
-                        // Credentials will be automatically injected into environment variables
+                        // No additional commands needed here; credentials are set up for the following stages.
                     }
                 }
             }
         }
         
-        stage('Terraform Execution') {
+        stage('Terraform Initialization and Execution') {
             steps {
                 script {
                     def userInput = input(
@@ -34,9 +35,11 @@ pipeline {
                         ]
                     )
                     
-                    // Based on user input, execute the corresponding Terraform command
+                    // Initialize Terraform once at the beginning of the execution stage.
+                    sh 'terraform init'
+                    
+                    // Execute Terraform apply or destroy based on user input.
                     if (userInput.ACTION == 'Apply') {
-                        sh 'terraform init'
                         sh 'terraform apply -auto-approve'
                     } else if (userInput.ACTION == 'Destroy') {
                         sh 'terraform destroy -auto-approve'
@@ -51,7 +54,7 @@ pipeline {
     post {
         always {
             echo 'Cleaning up...'
-            deleteDir()
+            deleteDir() // This cleans up the workspace after the job is done.
         }
     }
 }
