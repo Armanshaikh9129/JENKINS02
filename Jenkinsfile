@@ -37,7 +37,7 @@ pipeline {
                     
                     // Initialize Terraform once at the beginning of the execution stage.
                     sh 'terraform init'
-                    
+                    echo "User selected action: ${userInput.ACTION}"
                     // Execute Terraform apply or destroy based on user input.
                     if (userInput.ACTION == 'Apply') {
                         sh 'terraform apply -auto-approve'
