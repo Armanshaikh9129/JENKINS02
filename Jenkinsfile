@@ -36,6 +36,7 @@ pipeline {
                     
                     // Based on user input, execute the corresponding Terraform command
                     if (userInput.ACTION == 'Apply') {
+                        sh 'terraform init'
                         sh 'terraform apply -auto-approve'
                     } else if (userInput.ACTION == 'Destroy') {
                         sh 'terraform destroy -auto-approve'
