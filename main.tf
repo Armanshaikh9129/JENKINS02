@@ -4,6 +4,8 @@ terraform {
       source  = "hashicorp/aws"
       version = "~> 5.41"
     }
+  }
+}
 
 provider "aws" {
   region = "ap-south-1"
@@ -18,3 +20,4 @@ resource "aws_instance" "my_ec2_instance" {
     Name = "MyEC2Instance"
   }
 }
+
